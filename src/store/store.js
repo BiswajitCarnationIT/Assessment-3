@@ -6,7 +6,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 const initialState = {
     fullName : '',
-    email: ''
+    email: '',
+    address: ''
 }
 
 const reducer = (state = initialState,action) => {
@@ -16,6 +17,8 @@ const reducer = (state = initialState,action) => {
             return Object.assign({},state,{fullName : action.text});  //newobj existingState changeObject
         case 'EMAIL_CHANGE':
             return Object.assign({},state,{email : action.text});
+        case 'ADDRESS_CHANGE':
+            return Object.assign({},state,{address : action.text});
         default:
             return state;
     }
