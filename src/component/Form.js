@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import store from "../store/store";
 import axios from "axios";
+import Navlink from "./Navlink";
 
 const Form = (props) => {
   const handleSubmit = () => {
@@ -11,12 +12,13 @@ const Form = (props) => {
       email: props.email,
       address: props.address,
     };
-    console.log(article)
-    axios.post('http://localhost:3000/user', article)
-        .then()
-        .catch(error => {
-          this.setState({ errorMessage: error.message });
-          console.error('There was an error!', error);
+    console.log(article);
+    axios
+      .post("http://localhost:3000/user", article)
+      .then()
+      .catch((error) => {
+        this.setState({ errorMessage: error.message });
+        console.error("There was an error!", error);
       });
   };
   return (
@@ -49,15 +51,16 @@ const Form = (props) => {
       <button type="button" onClick={handleSubmit}>
         Submit
       </button>
+      <Navlink />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    fullName: state.fullName,
-    email: state.email,
-    address: state.address,
+    fullName: state.MainReducer.fullName,
+    email: state.MainReducer.email,
+    address: state.MainReducer.address,
   };
 };
 
