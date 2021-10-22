@@ -7,8 +7,9 @@ const initialState = {
 const ApiReducer = (state = initialState,action) => {
     switch (action.type) {
         case 'API_FETCH':
+            console.log("ApiReducer",action.data)
             return{
-                apiData:action.payload
+                apiData:action.data
             }
     
         default:
