@@ -8,14 +8,17 @@ const Form = (props) => {
   const handleSubmit = () => {
     //alert(props.fullName)
     const article = {
-      fullname: props.fullName,
+      fullname: props.fullname,
       email: props.email,
       address: props.address,
     };
     console.log(article);
     axios
       .post("http://localhost:3000/user", article)
-      .then()
+      .then(() => {
+        
+        alert("Submitted");
+      })
       .catch((error) => {
         this.setState({ errorMessage: error.message });
         console.error("There was an error!", error);
@@ -23,34 +26,37 @@ const Form = (props) => {
   };
   return (
     <div>
-      <input
-        type="text"
-        name="name"
-        placeholder="Full name"
-        value={props.fullName}
-        onChange={props.fullNameChange}
-      />
-      <p>{props.fullName}</p>
-      <br></br>
-      <input
-        type="text"
-        name="email"
-        placeholder="Email"
-        value={props.email}
-        onChange={props.emailChange}
-      />
-      <br></br>
-      <input
-        type="text"
-        name="address"
-        placeholder="Full Address"
-        value={props.address}
-        onChange={props.addressChange}
-      />
-      <br></br>
-      <button type="button" onClick={handleSubmit}>
-        Submit
-      </button>
+      <div className = "MainForm">
+        <p>Submit new data</p>
+        <input
+          type="text"
+          name="name"
+          placeholder="Full name"
+          value={props.fullname}
+          onChange={props.fullNameChange}
+        />
+        <p>{props.fullname}</p>
+        <br></br>
+        <input
+          type="text"
+          name="email"
+          placeholder="Email"
+          value={props.email}
+          onChange={props.emailChange}
+        />
+        <br></br>
+        <input
+          type="text"
+          name="address"
+          placeholder="Full Address"
+          value={props.address}
+          onChange={props.addressChange}
+        />
+        <br></br>
+        <button type="button" onClick={handleSubmit}>
+          Submit
+        </button>
+      </div>
       <Navlink />
     </div>
   );
@@ -58,7 +64,7 @@ const Form = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    fullName: state.MainReducer.fullName,
+    fullname: state.MainReducer.fullname,
     email: state.MainReducer.email,
     address: state.MainReducer.address,
   };

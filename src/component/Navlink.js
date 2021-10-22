@@ -23,7 +23,7 @@ const Navlink = (props) => {
   return (
     <div>
       <NavLink exact to="/table">
-        <button onClick={handleFetch}>click here</button>
+        <button  type="button" onClick={handleFetch}>click here to see all data</button>
       </NavLink>
     </div>
   );
