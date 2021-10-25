@@ -36,7 +36,7 @@ const UpdateRecord = (props) => {
         type="text"
         name="name"
         placeholder="Full name"
-        value={props.fullname}
+        defaultValue={props.fullname}  /// controled uncontroled prepolution
         onChange={props.fullNameChange}
       />
       <br></br>

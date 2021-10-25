@@ -3,8 +3,15 @@ import { connect } from "react-redux";
 import store from "../store/store";
 import axios from "axios";
 import Navlink from "./Navlink";
+import { useHistory } from "react-router-dom";
 
+let data;
 const Form = (props) => {
+  let history = useHistory();
+
+  // function handleClick() {
+  //   history.push("/home");
+  // }
   const handleSubmit = () => {
     //alert(props.fullName)
     const article = {
@@ -16,17 +23,31 @@ const Form = (props) => {
     axios
       .post("http://localhost:3000/user", article)
       .then(() => {
-        
         alert("Submitted");
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+    //this.history.push("/")  r-r-d
+
+    //*** */
+    axios
+      .get("http://localhost:3000/user")
+      .then((response) => {
+        data = response.data;
+        console.log(data);
+        //props.apiData = data
+        props.handleFetchToRedux();
       })
       .catch((error) => {
         this.setState({ errorMessage: error.message });
         console.error("There was an error!", error);
       });
+    history.push("/table");
   };
   return (
     <div>
-      <div className = "MainForm">
+      <div className="MainForm">
         <p>Submit new data</p>
         <input
           type="text"
@@ -67,6 +88,7 @@ const mapStateToProps = (state) => {
     fullname: state.MainReducer.fullname,
     email: state.MainReducer.email,
     address: state.MainReducer.address,
+    apiData: state.ApiReducer.apiData,
   };
 };
 
@@ -87,6 +109,7 @@ const mapDispatchToProps = (dispatch) => {
       const action = { type: "ADDRESS_CHANGE", text: event.target.value };
       dispatch(action);
     },
+    handleFetchToRedux: () => dispatch({ type: "API_FETCH", data }),
   };
 };
 

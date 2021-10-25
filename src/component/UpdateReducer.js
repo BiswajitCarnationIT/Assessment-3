@@ -3,6 +3,7 @@ const initialState = {
   fullname: "",
   email: "",
   address: "",
+  toBeUpdated:[],
 };
 
 const MainReducer = (state = initialState, action) => {
@@ -16,6 +17,9 @@ const MainReducer = (state = initialState, action) => {
       return Object.assign({}, state, { email: action.text });
     case "ADDRESS_CHANGE":
       return Object.assign({}, state, { address: action.text });
+    /** */
+    // case "TO_BE_UPDATED":
+    //   return {...state,toBeUpdated:action.userData};
     default:
       return state;
   }
