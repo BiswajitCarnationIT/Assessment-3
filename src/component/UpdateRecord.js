@@ -13,7 +13,6 @@ const UpdateRecord = (props) => {
       .get("http://localhost:3000/user")
       .then((response) => {
         const data = response.data;
-        console.log("useeffect called")
         props.handleFetchToRedux(data);
       })
       .catch((error) => {

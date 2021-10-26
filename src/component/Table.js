@@ -15,7 +15,6 @@ const Table = (props) => {
       .get("http://localhost:3000/user")
       .then((response) => {
         data = response.data;
-        console.log("useeffect called");
         props.handleFetchToRedux();
       })
       .catch((error) => {
