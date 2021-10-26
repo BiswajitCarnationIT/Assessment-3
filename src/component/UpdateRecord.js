@@ -3,65 +3,120 @@ import { connect } from "react-redux";
 import store from "../store/store";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 
 const UpdateRecord = (props) => {
+  let history = useHistory();
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/user")
+      .then((response) => {
+        const data = response.data;
+        console.log("useeffect called")
+        props.handleFetchToRedux(data);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }, []);
   const handleSubmit = () => {
-    console.log(props);
     const article = {
       fullname: props.fullname,
       email: props.email,
       address: props.address,
     };
-    console.log("article", article);
     axios
       .put(`http://localhost:3000/user/${props.id}`, article)
       .then((response) => alert("updated"))
       .catch((error) => {
         console.error("There was an error!", error);
       });
+
+    axios
+      .get("http://localhost:3000/user")
+      .then((response) => {
+        const data = response.data;
+        props.handleFetchToRedux(data);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+    history.push("/table");
   };
 
   return (
     <div className="Update">
-      <p>update Record</p>
-      <input
-        type="text"
-        name="id"
-        placeholder="id"
-        value={props.id}
-        onChange={props.idChange}
-      />
-      <br></br>
-      <input
-        type="text"
-        name="name"
-        placeholder="Full name"
-        defaultValue={props.fullname}  /// controled uncontroled prepolution
-        onChange={props.fullNameChange}
-      />
-      <br></br>
-      <input
-        type="text"
-        name="email"
-        placeholder="Email"
-        value={props.email}
-        onChange={props.emailChange}
-      />
-      <br></br>
-      <input
-        type="text"
-        name="address"
-        placeholder="Full Address"
-        value={props.address}
-        onChange={props.addressChange}
-      />
-      <br></br>
+      <p>Update Record</p>
+      <div class="col-6">
+        <div class="input-group">
+          <span class="input-group-text">id</span>
+          <input
+            type="text"
+            name="id"
+            class="form-control"
+            placeholder="id"
+            value={props.id}
+            onChange={props.idChange}
+          />
+        </div>
+      </div>
 
-      <NavLink exact to="/">
-        <button type="button" onClick={handleSubmit}>
+      <br></br>
+      <div class="col-6">
+        <div class="input-group">
+          <span class="input-group-text">Name</span>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            placeholder="Full name"
+            defaultValue={props.fullname}
+            onChange={props.fullNameChange}
+          />
+        </div>
+      </div>
+
+      <br></br>
+      <div class="col-6">
+        <div class="input-group">
+          <span class="input-group-text">Email</span>
+          <input
+            type="text"
+            name="email"
+            class="form-control"
+            placeholder="Email"
+            value={props.email}
+            onChange={props.emailChange}
+          />
+        </div>
+      </div>
+
+      <br></br>
+      <div class="col-6">
+        <div class="input-group">
+          <span class="input-group-text">Address</span>
+          <input
+            type="text"
+            name="address"
+            class="form-control"
+            placeholder="Full Address"
+            value={props.address}
+            onChange={props.addressChange}
+          />
+        </div>
+      </div>
+
+      <br></br>
+      <div class="col-6">
+        <button
+          class="form-control col-6 btn btn-success text-light"
+          type="button"
+          onClick={handleSubmit}
+        >
           Submit
         </button>
-      </NavLink>
+      </div>
     </div>
   );
 };
@@ -78,25 +133,22 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     idChange: (event) => {
-      console.log("id changed", event.target.value);
       const action = { type: "ID_CHANGE", text: event.target.value };
       dispatch(action);
     },
     fullNameChange: (event) => {
-      console.log("full changed", event.target.value);
       const action = { type: "FULLNAME_CHANGE", text: event.target.value };
       dispatch(action);
     },
     emailChange: (event) => {
-      console.log("email changed", event.target.value);
       const action = { type: "EMAIL_CHANGE", text: event.target.value };
       dispatch(action);
     },
     addressChange: (event) => {
-      console.log("address changed", event.target.value);
       const action = { type: "ADDRESS_CHANGE", text: event.target.value };
       dispatch(action);
     },
+    handleFetchToRedux: (data) => dispatch({ type: "API_FETCH", data }),
   };
 };
 

@@ -1,20 +1,19 @@
-import {createStore} from 'redux'
+import { createStore } from "redux";
 
 const initialState = {
-    apiData : []
-}
+  apiData: [],
+};
 
-const ApiReducer = (state = initialState,action) => {
-    switch (action.type) {
-        case 'API_FETCH':
-            console.log("ApiReducer",action.data)
-            return{
-                apiData:action.data
-            }
-    
-        default:
-            return state
-    }
-}
+const ApiReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "API_FETCH":
+      return {
+        apiData: action.data,
+      };
 
-export default ApiReducer
+    default:
+      return state;
+  }
+};
+
+export default ApiReducer;

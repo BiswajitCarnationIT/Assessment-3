@@ -5,56 +5,43 @@ import { connect } from "react-redux";
 import DeleteRecord from "./DeleteRecord";
 import UpdateRecord from "./UpdateRecord";
 import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 let data;
 let userData;
 const Table = (props) => {
-
-  useEffect(()=>{
+  useEffect(() => {
     axios
       .get("http://localhost:3000/user")
       .then((response) => {
         data = response.data;
-        console.log(data);
-        //props.apiData = data
+        console.log("useeffect called");
         props.handleFetchToRedux();
       })
       .catch((error) => {
-        this.setState({ errorMessage: error.message });
         console.error("There was an error!", error);
       });
-    
-  })
+  }, []);
   let history = useHistory();
-
-  //console.log("Props", props.apiData[2].fullname);
   const handleDelete = (id) => {
-    console.log("delete", id);
     axios.delete(`http://localhost:3000/user/${id}`).then(() => {
-      console.log("deleted");
       alert("deleted");
     });
-    //*** */
-    // axios
-    //   .get("http://localhost:3000/user")
-    //   .then((response) => {
-    //     data = response.data;
-    //     console.log(data);
-    //     //props.apiData = data
-    //     props.handleFetchToRedux();
-    //   })
-    //   .catch((error) => {
-    //     this.setState({ errorMessage: error.message });
-    //     console.error("There was an error!", error);
-    //   });
-    // history.push("/table");
+    axios
+      .get("http://localhost:3000/user")
+      .then((response) => {
+        data = response.data;
+        props.handleFetchToRedux();
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
     history.push("/table");
   };
 
   const handleUpdate = (user) => {
     userData = user;
-    console.log("userData", userData)
-    props.handleToBeUpdated()
+    props.handleToBeUpdated();
   };
   return (
     <div>
@@ -88,10 +75,11 @@ const Table = (props) => {
           ))}
         </table>
       </div>
-      {/* <input type="text"></input>
-      <button>Delete record</button> */}
-      <DeleteRecord />
+
       <UpdateRecord />
+      <NavLink exact to="/">
+        <button type="button">Go back</button>
+      </NavLink>
     </div>
   );
 };
@@ -104,8 +92,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleFetchToRedux: () => dispatch({ type: "API_FETCH", data }),
-    handleToBeUpdated: () => dispatch({type:"TO_BE_UPDATED",userData})
+    handleToBeUpdated: () => dispatch({ type: "TO_BE_UPDATED", userData }),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
