@@ -3,8 +3,11 @@ import { connect } from "react-redux";
 import store from "../store/store";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 
 const UpdateRecord = (props) => {
+  let history = useHistory();
   const handleSubmit = () => {
     console.log(props);
     const article = {
@@ -19,6 +22,8 @@ const UpdateRecord = (props) => {
       .catch((error) => {
         console.error("There was an error!", error);
       });
+      history.push("/table");
+      
   };
 
   return (
@@ -57,11 +62,11 @@ const UpdateRecord = (props) => {
       />
       <br></br>
 
-      <NavLink exact to="/">
+      {/* <NavLink exact to="/"> */}
         <button type="button" onClick={handleSubmit}>
           Submit
         </button>
-      </NavLink>
+      {/* </NavLink> */}
     </div>
   );
 };

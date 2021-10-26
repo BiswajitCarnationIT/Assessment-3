@@ -5,11 +5,13 @@ import { connect } from "react-redux";
 import DeleteRecord from "./DeleteRecord";
 import UpdateRecord from "./UpdateRecord";
 import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
 
 let data;
 let userData;
 const Table = (props) => {
-
+  let Res = {}
   useEffect(()=>{
     axios
       .get("http://localhost:3000/user")
@@ -23,16 +25,20 @@ const Table = (props) => {
         this.setState({ errorMessage: error.message });
         console.error("There was an error!", error);
       });
-    
-  })
+  },[Res])
   let history = useHistory();
-
   //console.log("Props", props.apiData[2].fullname);
   const handleDelete = (id) => {
-    console.log("delete", id);
-    axios.delete(`http://localhost:3000/user/${id}`).then(() => {
-      console.log("deleted");
+    //console.log("delete", id);
+    axios.delete(`http://localhost:3000/user/${id}`).then((res) => {
+      console.log("deleted",res);
+      Res = res;
       alert("deleted");
+    })
+    .catch((error) => {
+      Res = error
+      this.setState({ errorMessage: error.message });
+      console.error("There was an error!", error);
     });
     //*** */
     // axios
@@ -47,7 +53,6 @@ const Table = (props) => {
     //     this.setState({ errorMessage: error.message });
     //     console.error("There was an error!", error);
     //   });
-    // history.push("/table");
     history.push("/table");
   };
 
@@ -92,6 +97,11 @@ const Table = (props) => {
       <button>Delete record</button> */}
       <DeleteRecord />
       <UpdateRecord />
+      <NavLink exact to="/">
+      <button type="button" >
+          Go back
+        </button>
+      </NavLink>
     </div>
   );
 };
