@@ -1,0 +1,6 @@
+export const ID_CHANGE = "ID_CHANGE"
+export const FULLNAME_CHANGE = "FULLNAME_CHANGE"
+export const EMAIL_CHANGE = "EMAIL_CHANGE"
+export const ADDRESS_CHANGE = "ADDRESS_CHANGE"
+export const  API_FETCH = "API_FETCH"
+export const TO_BE_UPDATED = "TO_BE_UPDATED"

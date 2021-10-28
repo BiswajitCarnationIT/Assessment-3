@@ -1,3 +1,5 @@
+import { ADDRESS_CHANGE, EMAIL_CHANGE, FULLNAME_CHANGE, ID_CHANGE } from "./Actions";
+
 const initialState = {
   id: "",
   fullname: "",
@@ -6,15 +8,14 @@ const initialState = {
 };
 
 const MainReducer = (state = initialState, action) => {
-  //console.log("reducer", action);
   switch (action.type) {
-    case "ID_CHANGE":
+    case ID_CHANGE:
       return Object.assign({}, state, { id: action.text });
-    case "FULLNAME_CHANGE":
+    case FULLNAME_CHANGE:
       return Object.assign({}, state, { fullname: action.text });
-    case "EMAIL_CHANGE":
+    case EMAIL_CHANGE:
       return Object.assign({}, state, { email: action.text });
-    case "ADDRESS_CHANGE":
+    case ADDRESS_CHANGE:
       return Object.assign({}, state, { address: action.text });
 
     default:

@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import { API_FETCH } from "./Actions";
 
 const initialState = {
   apiData: [],
@@ -6,7 +7,7 @@ const initialState = {
 
 const ApiReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "API_FETCH":
+    case API_FETCH:
       return {
         apiData: action.data,
       };

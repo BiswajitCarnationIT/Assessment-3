@@ -4,8 +4,8 @@ import store from "../store/store";
 import axios from "axios";
 import Navlink from "./Navlink";
 import { useHistory } from "react-router-dom";
+import { ADDRESS_CHANGE, API_FETCH, EMAIL_CHANGE, FULLNAME_CHANGE } from "./Actions";
 
-let data;
 const Form = (props) => {
   let history = useHistory();
 
@@ -14,30 +14,24 @@ const Form = (props) => {
       alert("please put correct data");
     } else {
       const article = {
-        fullname: props.fullname,
-        email: props.email,
-        address: props.address,
+        fullname: props.fullname ? props.fullname : "",
+        email: props.email ? props.email : "",
+        address: props.address ? props.address : "",
       };
-      console.log(article);
       axios
         .post("http://localhost:3000/user", article)
         .then(() => {
           alert("Submitted");
         })
-        .catch((error) => {
-          console.error("There was an error!", error);
-        });
+        .catch((error) => {});
 
       axios
         .get("http://localhost:3000/user")
         .then((response) => {
-          data = response.data;
-          console.log(data);
-          props.handleFetchToRedux();
+          const data = response.data;
+          props.handleFetchToRedux(data);
         })
-        .catch((error) => {
-          console.error("There was an error!", error);
-        });
+        .catch((error) => {});
       history.push("/table");
     }
   };
@@ -75,24 +69,24 @@ const Form = (props) => {
           type="text"
           name="name"
           placeholder="Full name"
-          value={props.fullname}
-          onChange={props.fullNameChange}
+          value={props.fullname ? props.fullname : null}
+          onChange={props.fullNameChange ? props.fullNameChange : null}
         />
         <br></br>
         <input
           type="text"
           name="email"
           placeholder="Email"
-          value={props.email}
-          onChange={props.emailChange}
+          value={props.email ? props.email : null}
+          onChange={props.emailChange ? props.emailChange : null}
         />
         <br></br>
         <input
           type="text"
           name="address"
           placeholder="Full Address"
-          value={props.address}
-          onChange={props.addressChange}
+          value={props.address ? props.address : null}
+          onChange={props.addressChange ? props.addressChange : null}
         />
         <br></br>
         <button type="button" onClick={handleSubmit}>
@@ -106,28 +100,28 @@ const Form = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    fullname: state.MainReducer.fullname,
-    email: state.MainReducer.email,
-    address: state.MainReducer.address,
-    apiData: state.ApiReducer.apiData,
+    fullname: state.MainReducer.fullname?state.MainReducer.fullname:"",
+    email: state.MainReducer.email?state.MainReducer.email:"",
+    address: state.MainReducer.address?state.MainReducer.address:"",
+    apiData: state.ApiReducer.apiData?state.ApiReducer.apiData:"",
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fullNameChange: (event) => {
-      const action = { type: "FULLNAME_CHANGE", text: event.target.value };
+      const action = { type: FULLNAME_CHANGE , text: event.target.value };
       dispatch(action);
     },
     emailChange: (event) => {
-      const action = { type: "EMAIL_CHANGE", text: event.target.value };
+      const action = { type: EMAIL_CHANGE, text: event.target.value };
       dispatch(action);
     },
     addressChange: (event) => {
-      const action = { type: "ADDRESS_CHANGE", text: event.target.value };
+      const action = { type: ADDRESS_CHANGE, text: event.target.value };
       dispatch(action);
     },
-    handleFetchToRedux: () => dispatch({ type: "API_FETCH", data }),
+    handleFetchToRedux: (data) => dispatch({ type: API_FETCH, data }),
   };
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
+import { API_FETCH } from "./Actions";
 
 const Navlink = (props) => {
   const handleFetch = () => {
@@ -9,11 +10,9 @@ const Navlink = (props) => {
       .get("http://localhost:3000/user")
       .then((response) => {
         const data = response.data;
-        console.log(data);
         props.handleFetchToRedux(data);
       })
       .catch((error) => {
-        console.error("There was an error!", error);
       });
   };
   return (
@@ -35,7 +34,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleFetchToRedux: (data) => dispatch({ type: "API_FETCH", data }),
+    handleFetchToRedux: (data) => dispatch({ type: API_FETCH, data }),
   };
 };
 

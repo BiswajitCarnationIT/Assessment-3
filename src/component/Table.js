@@ -6,19 +6,17 @@ import DeleteRecord from "./DeleteRecord";
 import UpdateRecord from "./UpdateRecord";
 import { useHistory } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { API_FETCH, TO_BE_UPDATED } from "./Actions";
 
-let data;
-let userData;
 const Table = (props) => {
   useEffect(() => {
     axios
       .get("http://localhost:3000/user")
       .then((response) => {
-        data = response.data;
-        props.handleFetchToRedux();
+        const data = response.data;
+        props.handleFetchToRedux(data);
       })
       .catch((error) => {
-        console.error("There was an error!", error);
       });
   }, []);
   let history = useHistory();
@@ -29,18 +27,16 @@ const Table = (props) => {
     axios
       .get("http://localhost:3000/user")
       .then((response) => {
-        data = response.data;
-        props.handleFetchToRedux();
+        const data = response.data;
+        props.handleFetchToRedux(data);
       })
       .catch((error) => {
-        console.error("There was an error!", error);
       });
     history.push("/table");
   };
 
   const handleUpdate = (user) => {
-    userData = user;
-    props.handleToBeUpdated();
+    props.handleToBeUpdated(user);
   };
   return (
     <div>
@@ -90,8 +86,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleFetchToRedux: () => dispatch({ type: "API_FETCH", data }),
-    handleToBeUpdated: () => dispatch({ type: "TO_BE_UPDATED", userData }),
+    handleFetchToRedux: (data) => dispatch({ type: API_FETCH, data }),
+    handleToBeUpdated: (data) => dispatch({ type: TO_BE_UPDATED, data }),
   };
 };
 
