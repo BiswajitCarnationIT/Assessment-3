@@ -81,7 +81,7 @@ const Table = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    apiData: state.ApiReducer.apiData,
+    apiData: state?.ApiReducer?.apiData,
   };
 };
 const mapDispatchToProps = (dispatch) => {

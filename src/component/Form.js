@@ -14,9 +14,9 @@ const Form = (props) => {
       alert("please put correct data");
     } else {
       const article = {
-        fullname: props.fullname ? props.fullname : "",
-        email: props.email ? props.email : "",
-        address: props.address ? props.address : "",
+        fullname: props?.fullname ,
+        email: props?.email,
+        address: props?.address ,
       };
       axios
         .post("http://localhost:3000/user", article)
@@ -69,15 +69,15 @@ const Form = (props) => {
           type="text"
           name="name"
           placeholder="Full name"
-          value={props.fullname ? props.fullname : null}
-          onChange={props.fullNameChange ? props.fullNameChange : null}
+          value={props?.fullname }
+          onChange={props?.fullNameChange}
         />
         <br></br>
         <input
           type="text"
           name="email"
           placeholder="Email"
-          value={props.email ? props.email : null}
+          value={props?.email }
           onChange={props.emailChange ? props.emailChange : null}
         />
         <br></br>
@@ -85,7 +85,7 @@ const Form = (props) => {
           type="text"
           name="address"
           placeholder="Full Address"
-          value={props.address ? props.address : null}
+          value={props?.address }
           onChange={props.addressChange ? props.addressChange : null}
         />
         <br></br>
@@ -100,10 +100,10 @@ const Form = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    fullname: state.MainReducer.fullname?state.MainReducer.fullname:"",
-    email: state.MainReducer.email?state.MainReducer.email:"",
-    address: state.MainReducer.address?state.MainReducer.address:"",
-    apiData: state.ApiReducer.apiData?state.ApiReducer.apiData:"",
+    fullname: state?.MainReducer?.fullname,
+    email: state?.MainReducer?.email,
+    address: state?.MainReducer?.address,
+    apiData: state?.ApiReducer?.apiData,
   };
 };
 

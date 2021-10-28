@@ -68,7 +68,7 @@ const UpdateRecord = (props) => {
             name="name"
             class="form-control"
             placeholder="Full name"
-            defaultValue={props.fullname?props.fullname:null}
+            defaultValue={props?.fullname}
             onChange={props.fullNameChange?props.fullNameChange:null}
           />
         </div>
@@ -83,7 +83,7 @@ const UpdateRecord = (props) => {
             name="email"
             class="form-control"
             placeholder="Email"
-            value={props.email?props.email:null}
+            value={props?.email}
             onChange={props.emailChange?props.emailChange:null}
           />
         </div>
@@ -98,7 +98,7 @@ const UpdateRecord = (props) => {
             name="address"
             class="form-control"
             placeholder="Full Address"
-            value={props.address?props.address:null}
+            value={props?.address}
             onChange={props.addressChange?props.addressChange:null}
           />
         </div>
@@ -120,10 +120,10 @@ const UpdateRecord = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    id: state.UpdateReducer.id?state.UpdateReducer.id:"",
-    fullname: state.UpdateReducer.fullname?state.UpdateReducer.fullname:"",
-    email: state.UpdateReducer.email?state.UpdateReducer.email:"",
-    address: state.UpdateReducer.address?state.UpdateReducer.address:"",
+    id: state?.UpdateReducer?.id,
+    fullname: state?.UpdateReducer?.fullname,
+    email: state?.UpdateReducer?.email,
+    address: state?.UpdateReducer?.address,
   };
 };
 
